@@ -464,10 +464,9 @@ function sayonara()
 
     echo -e "\n\nConfig done!\n\nThis script will be deleted now.\n";
     echo -e "Wait for reboot...\n";
-    rm ${SELF_PATH}/${DC_ENV} ${SELF_PATH}/${0};
+    (cd ${SELF_PATH}; rm ${DC_ENV} ${0};);
 
-    sleep 3;
-    shutdown -R now;
+    sleep 3 && shutdown -r now;
 }
 
 clear;
