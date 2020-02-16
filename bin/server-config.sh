@@ -239,7 +239,7 @@ function uvn_os_setup()
         read -p "· Public Key Authentication, paste your key to Enable or empty to disable PubKeyAuth: " pubkey;
         
         if [[ ! -z ${pubkey} ]]; then
-            read -p "· Disable PasswordAuthentication? [Y]: " passauth;
+            read -p "· Disable PasswordAuthentication? (higer security=Y) [N]: " passauth;
 
             MY_PUBKEY="${pubkey-n}";
             SYS_PASSAUTH="${passauth-n}";
@@ -470,6 +470,7 @@ function sayonara()
     shutdown -R now;
 }
 
+clear;
 uvn_os_setup && sayonara
 
 exit 0
