@@ -4,36 +4,37 @@
 #   K8s cluster
 #       cgroups
 #       hugepages
-#   Set ssh key
+#   Sanitize user input
 
 export LC_CTYPE=C
 
-cd /tmp;
-
 # Check for root
 [[ ${EUID} = 0 ]] || { echo -e "This script must be run as root\n"; exit 2; }
+
+UVN_OS_VERSION='0.21b';
 
 MY_USER=
 MY_PUBKEY=
 MY_EMAIL=
 MY_TMP=
+
+IS_READY=
+
 SYS_PASSAUTH=
 SYS_LOCALE=
+SYS_BACKUP_PATH=
+
 SSH_TCP_PORT=
 SRV_IP=
 SRV_FQDN=
-IS_READY=
-
-UVN_OS_VERSION='0.21b';
-
-DC_ENV=/root/.dc-installer-env;
-DC_BASE_PATH=.dragonchain-installer/uvn-os;
-DC_INSTALL_PATH=
-SYS_BACKUP_PATH=
-
-MEMTOTAL=$(awk '/MemTotal/ { print $2 * 1024 }' /proc/meminfo);
 
 SELF_PATH=$(pwd);
+
+DC_ENV=${SELF_PATH}/.dc-installer-env;
+DC_BASE_PATH=.dragonchain-installer/uvn-os;
+DC_INSTALL_PATH=
+
+MEMTOTAL=$(awk '/MemTotal/ { print $2 * 1024 }' /proc/meminfo);
 
 # Save installer env vars to disk
 function set_env()
@@ -462,11 +463,10 @@ function sayonara()
     [[ ! -z "${IS_READY}" && "x${IS_READY}" = "xY" ]] || { echo -e "Something went wrong ...\n"; exit 1; }
 
     echo -e "\n\nConfig done!\n\nThis script will be deleted now.\n";
-    read -n 1 -spt 5 "Press [ENTER] or wait five seconds for reboot...";
-    echo -e "\n\n";
-    echo "rm ${SELF_PATH}/${DC_ENV}";
-    echo "rm ${SELF_PATH}/${0}";
-    
+    echo -e "Wait for reboot...\n";
+    rm ${SELF_PATH}/${DC_ENV} ${SELF_PATH}/${0};
+
+    sleep 3;
     shutdown -R now;
 }
 
