@@ -170,10 +170,10 @@ function set_email()
     set_env
 }
 
-function set_sshkey()
-{
-
-}
+# function set_sshkey()
+# {
+# 
+# }
 
 function config_complete()
 {
