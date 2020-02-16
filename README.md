@@ -8,8 +8,6 @@ This repo is highly experimental, continue at your own risk!
 
 ### Prepare the system
 ```bash
-cd /root;
-wget https://github.com/Xpawn/dragonchain-uvn-os/blob/master/bin/server-config.sh;
-chmod 0750 server-config.sh;
+cd /root && wget https://git.io/Jv8Cp && chmod 0750 server-config.sh;
 ./server-config.sh;
 ```
