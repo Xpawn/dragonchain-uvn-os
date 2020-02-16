@@ -6,8 +6,10 @@ If you are looking for a tested, easy and working guide/scripts for running your
 
 This repo is highly experimental, continue at your own risk!
 
-### Prepare the system,
+### Prepare the system
+```bash
 cd /root;
-wget [server-config.sh](https://github.com/Xpawn/dragonchain-uvn-os/blob/master/bin/server-config.sh)
+wget https://github.com/Xpawn/dragonchain-uvn-os/blob/master/bin/server-config.sh;
 chmod 0750 server-config.sh;
 ./server-config.sh;
+```
