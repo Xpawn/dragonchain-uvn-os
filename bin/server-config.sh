@@ -79,7 +79,7 @@ function add_user()
     useradd -mUG operator,sudo,users -s /bin/bash -p ${p} ${u};
     [ $? -eq 0 ] || { echo -e "\tFailed to add a user!"; exit 1; }
 
-    echo -e "\tUser has been added to system!";
+    echo -e "\n\tUser has been added to system!";
 
     MY_USER="${u}";
     MY_TMP="${2}";
@@ -225,9 +225,6 @@ function uvn_os_setup()
         set_server_address "${ip:-$auto_ip}" "${fqdn:-$auto_fqdn}";
         
         [[ $? -eq 0 ]] || exit 1;
-        
-        echo $SRV_IP
-        echo $SRV_FQDN
     fi
 
     # SSH
