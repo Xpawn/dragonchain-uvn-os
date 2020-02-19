@@ -220,7 +220,7 @@ setup
 
 #mknode_script
 
-# save kubbe config
-# create alias cmd habitualñes
+# save kube config
+# alias cmd
 # echo cheatsheet
 
