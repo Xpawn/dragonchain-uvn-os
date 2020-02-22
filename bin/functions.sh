@@ -1,9 +1,15 @@
 #!/bin/bash
 
-function setup_server()
-{
-get_secret_json
+#function setup_server()
+#{
+#get_secret_json
 #    echo "$(get_port 22 0)";
+#}
+
+# Setup functions
+function setup_server_data()
+{
+
 }
 
 # Utility functions
@@ -120,4 +126,57 @@ function get_secret_json()
     local k="$(get_hmac_token)";
 
     echo "{\"private-key\":\"${p}\",\"hmac-id\":\"${i}\",\"hmac-key\":\"${k}\",\"registry-password\":\"\"}";
+}
+
+# Returns JSON string with private-key, hmac-id and hmac-key
+function set_node_name()
+{
+    local n="${1-dc}";
+    local l="${2-2}";
+    
+    [[ ${n} =~ ^[A-Za-z0-9\-]{1,12}$ ]] && n="${n}" || n="dc-l${l}-$(date +"%N" | tail -c 6)";
+    
+    echo "${n}";
+}
+
+function set_ip()
+{
+    local ip;
+    local auto_ip="$(get_ip)";
+    local IP_REGEX="^([0-9]{1,2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]{1,2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]{1,2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.([0-9]{1,2}|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$";
+
+    while [[ ! ${ip} =~ $IP_REGEX ]]; do
+        read -r -p $'\t'"· Enter a public and reachable IPv4 address [${auto_ip}]: " ip;
+        ip="$(echo "${ip-auto_ip}" | tr -d '\r')";
+
+        if [[ ! ${ip} =~ $IP_REGEX ]]; then
+            echo -e "\t\tThis isn't a valid IPv4 address!";
+            ip="";
+        elif [[ ! $(ifconfig -a | grep "${ip}") ]]; then
+            echo -e "\tThis address does not belong to this server!";
+            ip="";
+        fi
+    done
+
+    echo "${ip}";
+}
+
+# Returns server public ip addr
+function get_ip()
+{
+    local ip=$(ip addr show dev "$(awk '$2 == 00000000 { print $1 }' /proc/net/route)" | awk '$1 == "inet" { sub("/.*", "", $2); print $2 }');
+    local ssh_data=(${SSH_CONNECTION});
+    
+    echo "${ip-ssh_data[2]}";
+}
+
+# Returns server Fully Qualified Domain Name
+function get_fqdn()
+{
+    local f="${1}";
+    # local
+    
+    [[ $(host "${f}" | grep "${SRV_IP}") ]] || { echo -e "\tThis FQDN doesn't resolves to given address!"; exit 1; };
+    
+    echo "${f}";
 }
