@@ -39,9 +39,9 @@ function get_port()
 
     msg="${msg}, [r] for random.";
     
-    [[ ! "${d}" = "0" ]] && msg="${msg} Press ENTER for default [${d}].";
+    [[ ! "${d}" = "0" ]] && msg="${msg} Press ENTER for default [${d}]";
 
-    while [[ ! ${s} =~ $PORT_REGEX || ${s} < ${l} || ${s} > ${h} ]]; do
+    while [[ ! ${s} =~ $PORT_REGEX || ${s} < ${l} || ${s} > ${h} || ! ${s} = ${d} ]]; do
         read -r -p "${msg}: " s;
 
         s="$(echo ${s} | tr -d '\r')";
