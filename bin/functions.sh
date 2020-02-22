@@ -47,7 +47,7 @@ function get_port()
 
         s="$(echo ${s} | tr -d '\r')";
 
-        [[ -z "xX${s}" = "xX" ]] && s="${d}";
+        [[ -z "${s}" ]] && s="${d}";
         [[ "${s,,}" = "r" ]] && s=$(get_rnd_num ${l} ${h});
     done
 
