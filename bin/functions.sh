@@ -52,7 +52,3 @@ function get_port()
 
     echo "${s}";
 }
-
-
-
-echo "";
