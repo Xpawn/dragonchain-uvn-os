@@ -9,6 +9,7 @@
 # Setup functions
 
 # Utility functions
+
 function get_rnd_num()
 {
     local f=${1-0};
