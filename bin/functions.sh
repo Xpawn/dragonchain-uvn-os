@@ -147,6 +147,7 @@ function set_ip()
         read -r -p $'\t'"· Enter a public and reachable IPv4 address [${auto_ip}]: " ip;
         ip="${ip-auto_ip}";
 echo $ip
+echo "pop"
         if [[ ! ${ip} =~ $IP_REGEX ]]; then
             echo -e "\t\tThis isn't a valid IPv4 address!";
             ip="";
