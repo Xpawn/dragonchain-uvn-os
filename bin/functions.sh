@@ -67,7 +67,7 @@ function get_uuid()
         read -r -p "${msg}: " id;
         id="$(echo ${id} | tr -d '\r')";
 
-        [[ "x${auto,,}" = "xauto" && "x${id}" = "x" ]] id="$(cat /proc/sys/kernel/random/uuid)";
+        [[ "x${auto,,}" = "xauto" && "x${id}" = "x" ]] && id="$(cat /proc/sys/kernel/random/uuid)";
     done
     shopt -u nocasematch;
 
