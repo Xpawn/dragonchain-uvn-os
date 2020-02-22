@@ -2,7 +2,7 @@
 
 function setup_server()
 {
-    echo "$(get_port 22)";
+    echo "$(get_port 22 0)";
 }
 
 # Utility functions
