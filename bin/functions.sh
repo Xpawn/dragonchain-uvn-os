@@ -7,10 +7,6 @@
 #}
 
 # Setup functions
-function setup_server_data()
-{
-
-}
 
 # Utility functions
 function get_rnd_num()
