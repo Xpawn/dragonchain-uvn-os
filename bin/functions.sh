@@ -37,17 +37,18 @@ function get_port()
         msg="${msg} smaller than ${h}";
     fi
 
-    msg="${msg}, [r] for random.cc";
+    msg="${msg}, [r] for random.";
     
     [[ ! "${d}" = "0" ]] && msg="${msg} Press ENTER for default [${d}]";
 
-    while [[ ! ${s} =~ $PORT_REGEX || ! ${s} = ${d} || ${s} < ${l} || ${s} > ${h} ]]; do
+    while [[ ! ${s} =~ $PORT_REGEX || ${s} < ${l} || ${s} > ${h} ]]; do
         read -r -p "${msg}: " s;
 
         s="$(echo ${s} | tr -d '\r')";
 
         [[ -z "${s}" ]] && s="${d}";
         [[ "${s,,}" = "r" ]] && s=$(get_rnd_num ${l} ${h});
+        [[ "xX${s}" = "xX${d}" ]] && break;
     done
 
     echo "${s}";
